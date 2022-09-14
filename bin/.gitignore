@@ -1,3 +1,7 @@
-/imagens/
-/imagenes/
 /views/
+/resources/
+/factory/
+/dao/
+/repositories/
+/service/
+/dto/
