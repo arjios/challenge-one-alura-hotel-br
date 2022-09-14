@@ -7,24 +7,17 @@ public class Reserva implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
-	private String nome;
-	private String sobrenome;
-	private String nacionalidade;
-	private String telefone;
-	private Instant dataNascimento;
-	private Integer idReserva;
+	private Instant dataEntrada;
+	private Instant dataSaida;
+	private Double idReserva;
 	
 	public Reserva() {
 	}
 
-	public Reserva(Long id, String nome, String sobrenome, String nacionalidade, String telefone,
-			Instant dataNascimento, Integer idReserva) {
+	public Reserva(Long id, Instant dataEntrada, Instant dataSaida, Double idReserva) {
 		this.id = id;
-		this.nome = nome;
-		this.sobrenome = sobrenome;
-		this.nacionalidade = nacionalidade;
-		this.telefone = telefone;
-		this.dataNascimento = dataNascimento;
+		this.dataEntrada = dataEntrada;
+		this.dataSaida = dataSaida;
 		this.idReserva = idReserva;
 	}
 
@@ -36,51 +29,27 @@ public class Reserva implements Serializable {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public Instant getDataEntrada() {
+		return dataEntrada;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setDataEntrada(Instant dataEntrada) {
+		this.dataEntrada = dataEntrada;
 	}
 
-	public String getSobrenome() {
-		return sobrenome;
+	public Instant getDataSaida() {
+		return dataSaida;
 	}
 
-	public void setSobrenome(String sobrenome) {
-		this.sobrenome = sobrenome;
+	public void setDataSaida(Instant dataSaida) {
+		this.dataSaida = dataSaida;
 	}
 
-	public String getNacionalidade() {
-		return nacionalidade;
-	}
-
-	public void setNacionalidade(String nacionalidade) {
-		this.nacionalidade = nacionalidade;
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
-	public Instant getDataNascimento() {
-		return dataNascimento;
-	}
-
-	public void setDataNascimento(Instant dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
-
-	public Integer getIdReserva() {
+	public Double getIdReserva() {
 		return idReserva;
 	}
 
-	public void setIdReserva(Integer idReserva) {
+	public void setIdReserva(Double idReserva) {
 		this.idReserva = idReserva;
 	}
 
