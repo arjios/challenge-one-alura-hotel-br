@@ -9,12 +9,12 @@ public class Reserva implements Serializable {
 	private Long id;
 	private Instant dataEntrada;
 	private Instant dataSaida;
-	private Double idReserva;
+	private Integer idReserva;
 	
 	public Reserva() {
 	}
 
-	public Reserva(Long id, Instant dataEntrada, Instant dataSaida, Double idReserva) {
+	public Reserva(Long id, Instant dataEntrada, Instant dataSaida, Integer idReserva) {
 		this.id = id;
 		this.dataEntrada = dataEntrada;
 		this.dataSaida = dataSaida;
@@ -45,11 +45,11 @@ public class Reserva implements Serializable {
 		this.dataSaida = dataSaida;
 	}
 
-	public Double getIdReserva() {
+	public Integer getIdReserva() {
 		return idReserva;
 	}
 
-	public void setIdReserva(Double idReserva) {
+	public void setIdReserva(Integer idReserva) {
 		this.idReserva = idReserva;
 	}
 

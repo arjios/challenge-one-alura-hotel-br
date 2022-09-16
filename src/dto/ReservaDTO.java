@@ -9,13 +9,13 @@ public class ReservaDTO {
 	private Long id;
 	private Instant dataEntrada;
 	private Instant dataSaida;
-	private Double idReserva;
+	private Integer idReserva;
 	
 	public ReservaDTO() {
 
 	}
 	
-	public ReservaDTO(Instant dataEntrada, Instant dataSaida, Double idReserva) {
+	public ReservaDTO(Instant dataEntrada, Instant dataSaida, Integer idReserva) {
 		this.dataEntrada = dataEntrada;
 		this.dataSaida = dataSaida;
 		this.idReserva = idReserva;
@@ -32,6 +32,10 @@ public class ReservaDTO {
 		return id;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	public Instant getDataEntrada() {
 		return dataEntrada;
 	}
@@ -44,15 +48,15 @@ public class ReservaDTO {
 		return dataSaida;
 	}
 
-	public void setDataSaida(Instant dataSaida) {
-		this.dataSaida = dataSaida;
+	public void setDataSaida(Instant date) {
+		this.dataSaida = date;
 	}
 
-	public Double getIdReserva() {
+	public Integer getIdReserva() {
 		return idReserva;
 	}
 
-	public void setIdReserva(Double idReserva) {
+	public void setIdReserva(Integer idReserva) {
 		this.idReserva = idReserva;
 	}
 

@@ -1,7 +1,6 @@
 package service;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import dto.ReservaDTO;
 import entities.Reserva;
@@ -12,8 +11,8 @@ public class ReservaService {
 	ReservaRepository reservaRepository;
 	
 	public Set<ReservaDTO> findAll() {	
-		Set<Reserva> reservas = reservaRepository.findAll();
-		return reservas.stream().map(x -> new ReservaDTO(x)).collect(Collectors.toSet());
+		Set<ReservaDTO> reservas = reservaRepository.findAll();
+		return reservas;
 	}
 	
 	public ReservaDTO findByIdReserva(Long id) {
