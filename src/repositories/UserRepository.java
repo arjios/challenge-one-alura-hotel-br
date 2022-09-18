@@ -1,9 +1,13 @@
 package repositories;
 
-import entities.User;
+import java.util.Set;
+
+import dto.UserDTO;
 
 public interface UserRepository {
 	
-	User findByName(String name);
+	Set<UserDTO> findAll();
+	UserDTO findById(Long id);
+	UserDTO findByName(String name);
 	
 }

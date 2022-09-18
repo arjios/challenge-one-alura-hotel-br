@@ -1,22 +1,25 @@
 package views;
 
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
-import javax.swing.JTextField;
-import javax.swing.JSeparator;
-import java.awt.SystemColor;
+import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.JPasswordField;
-import javax.swing.SwingConstants;
+import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import controllers.LoginController;
 
 public class Login extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -231,13 +234,19 @@ public class Login extends JFrame {
 		header.setLayout(null);
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void Login() {
-		 String Usuario= "admin";
-	     String Senha="admin";
 
-	        String senhaa=new String (txtSenha.getPassword());
+			String Usuario = "admin";
+			String Senha = "admin";
+        	
+        	LoginController loginController = new LoginController();
+	        
+	        if(loginController.isUser(Usuario, Senha) != null) {
+	        	System.out.println(Usuario + " : " + Senha);
+	        }
 
-	        if(txtUsuario.getText().equals(Usuario) && senhaa.equals(Senha)){
+	        if(txtUsuario.getText().equals(Usuario) && txtSenha.getText().equals(Senha)){
 	            MenuUsuario menu = new MenuUsuario();
 	            menu.setVisible(true);
 	            dispose();	 

@@ -8,9 +8,9 @@ import entities.Reserva;
 public interface ReservaRepository {
 
 	Set<ReservaDTO> findAll();
-	Reserva findByIdReserva(Long id);
-	Reserva insert();
-	Reserva update();
+	ReservaDTO findByIdReserva(Long id);
+	Reserva insert(ReservaDTO dto);
+	Reserva update(Long id, ReservaDTO dto);
 	Reserva delete(Long id);
 	
 }

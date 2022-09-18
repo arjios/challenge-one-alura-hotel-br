@@ -1,7 +1,5 @@
 package dto;
 
-import entities.User;
-
 public class UserDTO {
 
 	private Long id;
@@ -11,19 +9,12 @@ public class UserDTO {
 	public UserDTO() {
 	}
 
-	public UserDTO(String nome, String senha) {
-		this.nome = nome;
-		this.senha = senha;
-	}
-	
-	public UserDTO(User entity) {
-		id = entity.getId();
-		nome = entity.getNome();
-		senha = entity.getSenha();
-	}
-
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getNome() {

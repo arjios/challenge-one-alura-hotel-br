@@ -1,15 +1,17 @@
 package service;
 
+import dao.UserDAO;
 import dto.UserDTO;
-import entities.User;
 import repositories.UserRepository;
 
 public class UserService {
 
-	private UserRepository userRepository;
-	
-	public UserDTO findById(String nome) {
-		User obj = userRepository.findByName(nome);
-		return new UserDTO(obj);
+	private UserRepository userRepository = new UserDAO();
+
+	public UserService() {
+	}
+
+	public UserDTO findByName(String nome) {
+		return userRepository.findByName(nome);
 	}
 }

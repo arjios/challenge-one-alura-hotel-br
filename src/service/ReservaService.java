@@ -3,7 +3,6 @@ package service;
 import java.util.Set;
 
 import dto.ReservaDTO;
-import entities.Reserva;
 import repositories.ReservaRepository;
 
 public class ReservaService {
@@ -16,8 +15,8 @@ public class ReservaService {
 	}
 	
 	public ReservaDTO findByIdReserva(Long id) {
-		Reserva obj = reservaRepository.findByIdReserva(id);
-		return new ReservaDTO(obj);
+
+		return reservaRepository.findByIdReserva(id);
 	}
 
 }
