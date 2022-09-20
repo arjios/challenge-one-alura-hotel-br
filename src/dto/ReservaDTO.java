@@ -10,6 +10,7 @@ public class ReservaDTO {
 	private Instant dataEntrada;
 	private Instant dataSaida;
 	private Integer idReserva;
+	private String formaPagamento;
 	
 	public ReservaDTO() {
 
@@ -58,6 +59,14 @@ public class ReservaDTO {
 
 	public void setIdReserva(Integer idReserva) {
 		this.idReserva = idReserva;
+	}
+
+	public String getFormaPagamento() {
+		return formaPagamento;
+	}
+
+	public void setFormaPagamento(String formaPagamento) {
+		this.formaPagamento = formaPagamento;
 	}
 
 }

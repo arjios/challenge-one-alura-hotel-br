@@ -74,7 +74,7 @@ public class UserDAO implements UserRepository {
 				if(name.equals(rs.getString(2))) {
 					userDTO.setNome(name);
 					userDTO.setNome(rs.getString(2));
-					userDTO.setSenha(rs.getNString(3));
+					userDTO.setSenha(rs.getString(3));
 				}
 			}
 		} catch (Exception e) {

@@ -1,24 +1,31 @@
 package views;
 
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ImageIcon;
 import java.awt.Color;
-import javax.swing.JLabel;
+import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.JTabbedPane;
 import java.awt.Toolkit;
-import javax.swing.SwingConstants;
-import javax.swing.JSeparator;
-import javax.swing.ListSelectionModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.Iterator;
+import java.util.Set;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+
+import controllers.ReservaController;
+import dto.ReservaDTO;
 
 @SuppressWarnings("serial")
 public class Buscar extends JFrame {
@@ -203,7 +210,15 @@ public class Buscar extends JFrame {
 		btnbuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				ReservaController reservaController = new ReservaController();
+				Set<ReservaDTO> reservas = reservaController.findAllReservas();
+				Iterator<ReservaDTO> itr = reservas.iterator();
+				while(itr.hasNext()) {
+					ReservaDTO rdto = itr.next();
+					modelo.addRow(new Object[]{rdto.getDataEntrada(), rdto.getDataSaida(), "1.000,00", rdto.getFormaPagamento()});
+				}
 
+				System.out.println("Rotina BUSCAR");
 			}
 		});
 		btnbuscar.setLayout(null);

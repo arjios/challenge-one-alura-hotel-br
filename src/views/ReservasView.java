@@ -1,34 +1,44 @@
 package views;
 
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.SystemColor;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
 import java.awt.Color;
-import javax.swing.JTextField;
-import com.toedter.calendar.JDateChooser;
+import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import java.text.Format;
+import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.Toolkit;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.Format;
+import java.util.Random;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
+import com.toedter.calendar.JDateChooser;
+
+import controllers.ReservaController;
+import dto.ReservaDTO;
 
 
 @SuppressWarnings("serial")
 public class ReservasView extends JFrame {
 
+	private ReservaDTO reservaDTO;
+	
+	private ReservaController reservaController;
+	
 	private JPanel contentPane;
 	public static JTextField txtValor;
 	public static JDateChooser txtDataE;
@@ -58,6 +68,7 @@ public class ReservasView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ReservasView() {
 		super("Reserva");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ReservasView.class.getResource("/imagenes/aH-40px.png")));
@@ -142,6 +153,7 @@ public class ReservasView extends JFrame {
 		txtDataS.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				//Ativa o evento, após o usuário selecionar as datas, o valor da reserva deve ser calculado
+
 			}
 		});
 		txtDataS.setDateFormatString("yyyy-MM-dd");
@@ -295,8 +307,22 @@ public class ReservasView extends JFrame {
 		btnProximo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (ReservasView.txtDataE.getDate() != null && ReservasView.txtDataS.getDate() != null) {		
-					RegistroHospede registro = new RegistroHospede();
+				if (ReservasView.txtDataE.getDate() != null && ReservasView.txtDataS.getDate() != null) {
+				    	    reservaController = new ReservaController();
+							reservaDTO = new ReservaDTO();
+							reservaDTO.setDataEntrada(txtDataE.getDate().toInstant());
+							reservaDTO.setDataSaida(txtDataS.getDate().toInstant());
+							reservaDTO.setIdReserva(new Random().nextInt(900000) + 100000);
+							reservaDTO.setFormaPagamento(txtFormaPagamento.getSelectedItem().toString());
+							System.out.println(reservaDTO + " -01- " + reservaDTO.getIdReserva());
+							reservaDTO = reservaController.inserirReserva(reservaDTO);
+							System.out.println(reservaDTO + " -02- " + reservaDTO.getIdReserva());
+							System.out.println("ReservaView: Passo-03");
+							System.out.println("PropertyChangeEvent: " + e.getSource());
+							System.out.println("Data entrada: " + txtDataE.getDate() + " Data saida: " + txtDataS.getDate());
+							
+							RegistroHospede registro = new RegistroHospede();
+					
 					registro.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "Deve preencher todos os campos.");

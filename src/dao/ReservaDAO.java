@@ -1,11 +1,15 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,40 +26,32 @@ public class ReservaDAO implements ReservaRepository {
 
 	@Override
 	public Set<ReservaDTO> findAll() {
-		String sql = "SELECT * FROM RESERVAS";
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
 		try {
-			con = ConnectionFactory.createConnection();
-			ps = con.prepareStatement(sql);
-			rs = ps.executeQuery();
+			Connection con = ConnectionFactory.createConnection();
+			Statement st =  con.createStatement();
+			st.execute("SELECT * FROM RESERVA");
+			ResultSet rs = st.getResultSet();
 			while(rs.next()) {
 				ReservaDTO dto = new ReservaDTO();
 				dto.setId(rs.getLong(1));
-				dto.setDataEntrada(rs.getDate(2).toInstant());
-				dto.setDataSaida(rs.getDate(3).toInstant());
+				
+				LocalDate entrada = rs.getDate(2).toLocalDate();
+				dto.setDataEntrada(entrada.atStartOfDay().toInstant(ZoneOffset.UTC));
+
+				LocalDate saida = rs.getDate(3).toLocalDate();
+				dto.setDataEntrada(saida.atStartOfDay().toInstant(ZoneOffset.UTC));
+				
 				dto.setIdReserva(rs.getInt(4));
 				reservas.add(dto);
+				System.out.println(reservas);
 			}
+			rs.close();
+			st.close();
+			con.close();
 		} catch (ClassNotFoundException | SQLException e) {
 			System.out.println("Ocorreu erro na leitura das Reservas.");
 			e.printStackTrace();
-		} finally {
-			try {
-				if(rs != null) {
-					rs.close();
-				}
-				if(ps != null) {
-					ps.close();
-				}
-				if(con != null) {
-					con.close();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		} 
 		return reservas;
 	}
 
@@ -93,18 +89,23 @@ public class ReservaDAO implements ReservaRepository {
 	}
 
 	@Override
-	public Reserva insert(ReservaDTO entity) {
-		boolean boo = false;
-		String sql = "INSERT INTO FROM RESERVAS(dataEntrada, dataSaida, id_reserva) VALUES (?, ?, ?)";
+	public ReservaDTO insert(ReservaDTO entity) {
+		String sql = "INSERT INTO RESERVA(data_entrada, data_saida, id_reserva, forma_pagamento) VALUES (?, ?, ?, ?)";
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
+			System.out.println("ReservaDAO: insert()");
 			con = ConnectionFactory.createConnection();
 			ps = con.prepareStatement(sql);
-			ps.setDate(1, (java.sql.Date) Date.from(entity.getDataEntrada()));
-			ps.setDate(2, (java.sql.Date) Date.from(entity.getDataSaida()));
+			LocalDate entrada = LocalDate.ofInstant(entity.getDataEntrada(), ZoneId.systemDefault());
+			Date e = Date.valueOf(entrada);
+			LocalDate saida = LocalDate.ofInstant(entity.getDataSaida(), ZoneId.systemDefault());
+			Date s = Date.valueOf(saida);
+			ps.setDate(1, e);
+			ps.setDate(2, s);
 			ps.setLong(3, entity.getIdReserva());
-			boo = ps.execute();
+			ps.setNString(4, entity.getFormaPagamento());
+			ps.execute();
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

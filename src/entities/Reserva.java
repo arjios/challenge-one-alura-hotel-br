@@ -9,16 +9,20 @@ public class Reserva implements Serializable {
 	private Long id;
 	private Instant dataEntrada;
 	private Instant dataSaida;
+	private String formaPagamento;
 	private Integer idReserva;
+
 	
 	public Reserva() {
 	}
 
-	public Reserva(Long id, Instant dataEntrada, Instant dataSaida, Integer idReserva) {
+	public Reserva(Long id, Instant dataEntrada, Instant dataSaida, Integer idReserva, String formaPagamento) {
+		super();
 		this.id = id;
 		this.dataEntrada = dataEntrada;
 		this.dataSaida = dataSaida;
 		this.idReserva = idReserva;
+		this.formaPagamento = formaPagamento;
 	}
 
 	public Long getId() {
@@ -51,6 +55,14 @@ public class Reserva implements Serializable {
 
 	public void setIdReserva(Integer idReserva) {
 		this.idReserva = idReserva;
+	}
+
+	public String getFormaPagamento() {
+		return formaPagamento;
+	}
+
+	public void setFormaPagamento(String formaPagamento) {
+		this.formaPagamento = formaPagamento;
 	}
 
 	@Override
