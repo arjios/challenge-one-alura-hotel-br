@@ -93,6 +93,7 @@ public class Buscar extends JFrame {
 		tbReservas = new JTable();
 		tbReservas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbReservas.setFont(new Font("Roboto", Font.PLAIN, 16));
+		tbReservas.setBackground(Color.YELLOW);
 		panel.addTab("Reservas", new ImageIcon(Buscar.class.getResource("/imagenes/reservado.png")), tbReservas, null);
 		modelo = (DefaultTableModel) tbReservas.getModel();
 		modelo.addColumn("Numero de Reserva");
@@ -100,6 +101,11 @@ public class Buscar extends JFrame {
 		modelo.addColumn("Data Check Out");
 		modelo.addColumn("Valor");
 		modelo.addColumn("Forma de Pago");
+		modelo.addRow(new Object[] {"Numero de Reserva",
+				"Data Check In",
+				"Data Check Out",
+				"Valor",
+				"Forma de Pago"});
 
 		
 		
@@ -219,19 +225,13 @@ public class Buscar extends JFrame {
 				int linha = 1;
 				while(itr.hasNext()) {
 					rdto = itr.next();
-					System.out.println("[ " + linha++ + "] " + rdto.getIdReserva() + " : " +
-								rdto.getDataEntrada() + " | " +
-								rdto.getDataSaida() + " | " +
-								rdto.getFormaPagamento() + " | " +
-								rdto.getValor());
-//					modelo.setValueAt(rdto.getIdReserva(), linha, 1);
-//					modelo.setValueAt(rdto.getDataEntrada(), linha, 2);
-//					modelo.setValueAt(rdto.getDataSaida(), linha, 3);
-//					modelo.setValueAt("Valor", linha, 4);
-//					modelo.setValueAt(rdto.getFormaPagamento(), linha, 5);
+					modelo.addRow(new Object[] {rdto.getIdReserva(),
+												rdto.getDataEntrada(),
+												rdto.getDataSaida(),
+												rdto.getValor(),
+												rdto.getFormaPagamento()});
 				}
 
-				System.out.println("Rotina BUSCAR");
 			}
 		});
 		btnbuscar.setLayout(null);

@@ -1,8 +1,6 @@
 package dao.util;
 
 import java.time.Instant;
-import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
 
 public class CalculaDiasEntreDatas {
 	
@@ -18,8 +16,6 @@ public class CalculaDiasEntreDatas {
 		dias = ((dataFim.getEpochSecond() - dataInicio.getEpochSecond()) / 86400);
 
 		numeroDias = Integer.valueOf(dias.intValue());
-		
-		System.out.println(numeroDias);
 
 		 return numeroDias;
 	}
