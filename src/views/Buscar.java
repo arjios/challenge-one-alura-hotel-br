@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -22,7 +23,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-
 
 import controllers.ReservaController;
 import dto.ReservaDTO;
@@ -100,6 +100,7 @@ public class Buscar extends JFrame {
 		modelo.addColumn("Data Check Out");
 		modelo.addColumn("Valor");
 		modelo.addColumn("Forma de Pago");
+
 		
 		
 		tbHospedes = new JTable();
@@ -213,9 +214,21 @@ public class Buscar extends JFrame {
 				ReservaController reservaController = new ReservaController();
 				Set<ReservaDTO> reservas = reservaController.findAllReservas();
 				Iterator<ReservaDTO> itr = reservas.iterator();
+				ReservaDTO rdto = new ReservaDTO();
+				tbReservas.setModel(modelo);
+				int linha = 1;
 				while(itr.hasNext()) {
-					ReservaDTO rdto = itr.next();
-					modelo.addRow(new Object[]{rdto.getDataEntrada(), rdto.getDataSaida(), "1.000,00", rdto.getFormaPagamento()});
+					rdto = itr.next();
+					System.out.println("[ " + linha++ + "] " + rdto.getIdReserva() + " : " +
+								rdto.getDataEntrada() + " | " +
+								rdto.getDataSaida() + " | " +
+								rdto.getFormaPagamento() + " | " +
+								rdto.getValor());
+//					modelo.setValueAt(rdto.getIdReserva(), linha, 1);
+//					modelo.setValueAt(rdto.getDataEntrada(), linha, 2);
+//					modelo.setValueAt(rdto.getDataSaida(), linha, 3);
+//					modelo.setValueAt("Valor", linha, 4);
+//					modelo.setValueAt(rdto.getFormaPagamento(), linha, 5);
 				}
 
 				System.out.println("Rotina BUSCAR");

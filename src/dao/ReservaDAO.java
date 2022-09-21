@@ -13,6 +13,7 @@ import java.time.ZoneOffset;
 import java.util.HashSet;
 import java.util.Set;
 
+import dao.util.CalculoDiarias;
 import dto.ReservaDTO;
 import entities.Reserva;
 import factory.ConnectionFactory;
@@ -21,6 +22,8 @@ import repositories.ReservaRepository;
 public class ReservaDAO implements ReservaRepository {
 	
 	private ReservaDTO reservaDTO;
+	
+	private CalculoDiarias calculaDiarias = new CalculoDiarias();;
 	
 	private Set<ReservaDTO> reservas = new HashSet<>();
 
@@ -31,19 +34,20 @@ public class ReservaDAO implements ReservaRepository {
 			Statement st =  con.createStatement();
 			st.execute("SELECT * FROM RESERVA");
 			ResultSet rs = st.getResultSet();
+
 			while(rs.next()) {
 				ReservaDTO dto = new ReservaDTO();
 				dto.setId(rs.getLong(1));
-				
-				LocalDate entrada = rs.getDate(2).toLocalDate();
-				dto.setDataEntrada(entrada.atStartOfDay().toInstant(ZoneOffset.UTC));
-
-				LocalDate saida = rs.getDate(3).toLocalDate();
-				dto.setDataEntrada(saida.atStartOfDay().toInstant(ZoneOffset.UTC));
-				
 				dto.setIdReserva(rs.getInt(4));
+				LocalDate entrada = rs.getDate(2).toLocalDate();
+				Instant instantEntrada = entrada.atStartOfDay().toInstant(ZoneOffset.UTC);
+				dto.setDataEntrada(instantEntrada);
+				LocalDate saida = rs.getDate(3).toLocalDate();
+				Instant instantSaida = saida.atStartOfDay().toInstant(ZoneOffset.UTC);
+				dto.setDataSaida(instantSaida);
+				dto.setFormaPagamento(rs.getString(5));		
+				dto.setValor(calculaDiarias.calculaValorDiariasTotal(500.00, instantEntrada, instantSaida));
 				reservas.add(dto);
-				System.out.println(reservas);
 			}
 			rs.close();
 			st.close();

@@ -9,7 +9,8 @@ public class CalculoDiarias {
 	public CalculoDiarias() {
 	}
 
-	public Double calculaValorDiariasTotal(Double v, Instant dataEntrada, Instant dataSaida) {		
+	public Double calculaValorDiariasTotal(Double v, Instant dataEntrada, Instant dataSaida) {
+		System.out.println(dataSaida);
 		return v * calculaDiasEntreDatas.DiasEntreDatas(dataEntrada, dataSaida);
 	}
 }
