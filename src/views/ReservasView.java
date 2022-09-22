@@ -29,6 +29,7 @@ import javax.swing.border.LineBorder;
 import com.toedter.calendar.JDateChooser;
 
 import controllers.ReservaController;
+import dao.util.CalculoDiarias;
 import dto.ReservaDTO;
 
 
@@ -173,6 +174,7 @@ public class ReservasView extends JFrame {
 		txtValor.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		panel.add(txtValor);
 		txtValor.setColumns(10);
+		txtValor.setText("0,00");
 		
 		JLabel lblValor = new JLabel("VALOR DA RESERVA");
 		lblValor.setForeground(SystemColor.textInactiveText);
@@ -308,22 +310,18 @@ public class ReservasView extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (ReservasView.txtDataE.getDate() != null && ReservasView.txtDataS.getDate() != null) {
+					CalculoDiarias cd = new CalculoDiarias();
 				    	    reservaController = new ReservaController();
 							reservaDTO = new ReservaDTO();
 							reservaDTO.setDataEntrada(txtDataE.getDate().toInstant());
 							reservaDTO.setDataSaida(txtDataS.getDate().toInstant());
 							reservaDTO.setIdReserva(new Random().nextInt(900000) + 100000);
+							txtValor.setText(cd.calculaValorDiariasTotal(500.00, txtDataE.getDate().toInstant(), txtDataS.getDate().toInstant()).toString());
 							reservaDTO.setFormaPagamento(txtFormaPagamento.getSelectedItem().toString());
-							System.out.println(reservaDTO + " -01- " + reservaDTO.getIdReserva());
 							reservaDTO = reservaController.inserirReserva(reservaDTO);
-							System.out.println(reservaDTO + " -02- " + reservaDTO.getIdReserva());
-							System.out.println("ReservaView: Passo-03");
-							System.out.println("PropertyChangeEvent: " + e.getSource());
-							System.out.println("Data entrada: " + txtDataE.getDate() + " Data saida: " + txtDataS.getDate());
-							
-							RegistroHospede registro = new RegistroHospede();
 					
-					registro.setVisible(true);
+							RegistroHospede registro = new RegistroHospede();
+							registro.setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(null, "Deve preencher todos os campos.");
 				}

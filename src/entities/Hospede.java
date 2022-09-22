@@ -9,24 +9,23 @@ public class Hospede implements Serializable {
 	private Long id;
 	private String nome;
 	private String sobrenome;
-	private String nacionalidade;
 	private String telefone;
 	private Instant dataNascimento;
 	private Integer idReserva;
+	private String nacionalidade;
 	
 	public Hospede() {
-
 	}
 
-	public Hospede(Long id, String nome, String sobrenome, String nacionalidade, String telefone,
-			Instant dataNascimento, Integer idReserva) {
+	public Hospede(Long id, String nome, String sobrenome, String telefone,
+			Instant dataNascimento, Integer idReserva, String nacionalidade) {
 		this.id = id;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
-		this.nacionalidade = nacionalidade;
 		this.telefone = telefone;
 		this.dataNascimento = dataNascimento;
 		this.idReserva = idReserva;
+		this.nacionalidade = nacionalidade;
 	}
 
 	public Long getId() {

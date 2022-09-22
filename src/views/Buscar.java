@@ -14,7 +14,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -24,7 +23,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import controllers.HospedeController;
 import controllers.ReservaController;
+import dto.HospedeDTO;
 import dto.ReservaDTO;
 
 @SuppressWarnings("serial")
@@ -114,13 +115,20 @@ public class Buscar extends JFrame {
 		tbHospedes.setFont(new Font("Roboto", Font.PLAIN, 16));
 		panel.addTab("Hóspedes", new ImageIcon(Buscar.class.getResource("/imagenes/pessoas.png")), tbHospedes, null);
 		modeloHospedes = (DefaultTableModel) tbHospedes.getModel();
-		modeloHospedes.addColumn("Numero de Hóspede");
+		modeloHospedes.addColumn("Hóspede ID");
 		modeloHospedes.addColumn("Nome");
 		modeloHospedes.addColumn("Sobrenome");
-		modeloHospedes.addColumn("Data de Nascimento");
+		modeloHospedes.addColumn("Nascimento");
 		modeloHospedes.addColumn("Nacionalidade");
 		modeloHospedes.addColumn("Telefone");
 		modeloHospedes.addColumn("Numero de Reserva");
+		modeloHospedes.addRow(new Object[] {"Hóspede ID",
+				"Nome",
+				"Sobrenome",
+				"Nascimento",
+				"Nacionalidade",
+				"Telefone",
+				"Reserva ID"});
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(Buscar.class.getResource("/imagenes/Ha-100px.png")));
@@ -217,12 +225,17 @@ public class Buscar extends JFrame {
 		btnbuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				System.out.println(e.getSource());
+				
 				ReservaController reservaController = new ReservaController();
 				Set<ReservaDTO> reservas = reservaController.findAllReservas();
+				
+				HospedeController hospedeController = new HospedeController();
+				Set<HospedeDTO> hospedes = hospedeController.findAllHospedes();
+				
 				Iterator<ReservaDTO> itr = reservas.iterator();
 				ReservaDTO rdto = new ReservaDTO();
 				tbReservas.setModel(modelo);
-				int linha = 1;
 				while(itr.hasNext()) {
 					rdto = itr.next();
 					modelo.addRow(new Object[] {rdto.getIdReserva(),

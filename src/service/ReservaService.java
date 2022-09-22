@@ -24,7 +24,7 @@ public class ReservaService {
 	
 	public ReservaDTO insert(ReservaDTO dto) {
 //		hospedeRepository.insert();
-		System.out.println("ReservaService: insert()");
+		System.out.println("reservaService" + " -03- " + dto.getIdReserva());
 		return reservaRepository.insert(dto);
 	}
 

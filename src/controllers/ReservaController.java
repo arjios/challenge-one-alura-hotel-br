@@ -12,7 +12,7 @@ public class ReservaController {
 	private ReservaDTO reservaDTO = new ReservaDTO();
 	
 	public ReservaDTO inserirReserva(ReservaDTO dto) {
-		System.out.println("ReservaController: inserirReserva()");
+		System.out.println("reservaController" + " -02- " + reservaDTO.getIdReserva());
 		reservaDTO = reservaService.insert(dto);
 		return reservaDTO;
 	}
