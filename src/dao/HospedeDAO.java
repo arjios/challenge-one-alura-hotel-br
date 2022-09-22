@@ -17,10 +17,10 @@ import repositories.HospedeRepository;
 public class HospedeDAO implements HospedeRepository {
 	
 	private Hospede hospede;
-	private Set<HospedeDTO> hospedes = new HashSet<>();
+	private Set<Hospede> hospedes = new HashSet<>();
 
 	@Override
-	public Set<HospedeDTO> findAll() {
+	public Set<Hospede> findAll() {
 		try {
 			Connection con = ConnectionFactory.createConnection();
 			Statement st =  con.createStatement();
@@ -38,8 +38,7 @@ public class HospedeDAO implements HospedeRepository {
 				
 				hospede.setIdReserva(rs.getInt("id_reserva"));
 				hospede.setNacionalidade(rs.getString("nacionalidade"));
-				
-				hospedes.add(new HospedeDTO(hospede));	
+
 			}
 		} catch(Exception e) {
 			System.out.println(e.getStackTrace());

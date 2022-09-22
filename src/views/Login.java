@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controllers.LoginController;
+import dto.UserDTO;
 
 public class Login extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -233,26 +234,26 @@ public class Login extends JFrame {
 		panel.add(header);
 		header.setLayout(null);
 	}
-	
-	@SuppressWarnings("deprecation")
+
 	private void Login() {
 
-			String Usuario = "admin";
-			String Senha = "admin";
-        	
-        	LoginController loginController = new LoginController();
-	        
-	        if(loginController.isUser(Usuario, Senha) != null) {
-	        	System.out.println(Usuario + " : " + Senha);
-	        }
+			String Usuario = txtUsuario.getText();
+			String Senha = String.copyValueOf(txtSenha.getPassword());
 
-	        if(txtUsuario.getText().equals(Usuario) && txtSenha.getText().equals(Senha)){
-	            MenuUsuario menu = new MenuUsuario();
-	            menu.setVisible(true);
-	            dispose();	 
-	        }else {
-	            JOptionPane.showMessageDialog(this, "Usuario ou Senha não válidos");
-	        }
+        	UserDTO userDTO = new UserDTO();
+        	
+        	userDTO = LoginController.findUserByName(txtUsuario.getText());
+
+        	if(Usuario != null && Senha !=  null) {
+        		if(Usuario.equals(userDTO.getNome()) && Senha.equals(userDTO.getSenha())) {
+    	            MenuUsuario menu = new MenuUsuario();
+    	            menu.setVisible(true);
+    	            dispose();
+        		} else {
+        			JOptionPane.showMessageDialog(this, "Usuario ou Senha não válidos");
+        		}
+        	}
+
 	} 
 	
 	//Código que permite movimentar a janela pela tela seguindo a posição de "x" e "y"

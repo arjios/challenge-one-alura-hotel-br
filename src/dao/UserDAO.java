@@ -3,80 +3,32 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.HashSet;
-import java.util.Set;
 
-import dto.UserDTO;
+import entities.User;
 import factory.ConnectionFactory;
 import repositories.UserRepository;
 
 public class UserDAO implements UserRepository {
 	
-	private UserDTO userDTO = new UserDTO();
-	
-	private Set<UserDTO> users = new HashSet<>();
+	private User user = new User();
 
 	@Override
-	public Set<UserDTO> findAll() {
-		try {
-			Connection con = ConnectionFactory.createConnection();
-			Statement st =  con.createStatement();
-			st.execute("SELECT * FROM USER");
-			ResultSet rs = st.getResultSet();
-			while(rs.next()) {
-				userDTO.setId(rs.getLong(1));
-				userDTO.setNome(rs.getNString(2));
-				users.add(userDTO);
-				System.out.println(users);
-			}
-			rs.close();
-			st.close();
-			con.close();
-		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return users;
-	}
-
-	@Override
-	public UserDTO findById(Long id) {
-		try {
-			Connection con = ConnectionFactory.createConnection();
-			Statement st =  con.createStatement();
-			st.execute("SELECT * FROM USER WHERE ID = ?");
-			ResultSet rs = st.getResultSet();
-			userDTO.setId(rs.getLong(1));
-			userDTO.setNome(rs.getString(2));
-			rs.close();
-			st.close();
-			con.close();
-		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return userDTO;
-	}
-
-	@Override
-	public UserDTO findByName(String name) {
-		String sql = "select * from user";
+	public User findByName(String name) {
+		String sql = "SELECT * FROM user WHERE nome = ? ";
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			con = ConnectionFactory.createConnection();
 			ps = con.prepareStatement(sql);
-			rs = ps.executeQuery(sql);
-			while(rs.next()) {
-				if(name.equals(rs.getString(2))) {
-					userDTO.setNome(name);
-					userDTO.setNome(rs.getString(2));
-					userDTO.setSenha(rs.getString(3));
-				}
+			ps.setString(1, name);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				user.setId(rs.getLong("id"));
+				user.setNome(rs.getString("nome"));
+				user.setSenha(rs.getString("senha"));	
 			}
+
 		} catch (Exception e) {
 			System.out.println("Ocorreu erro na leitura do nome em User.");
 			e.printStackTrace();
@@ -95,7 +47,7 @@ public class UserDAO implements UserRepository {
 				e.printStackTrace();
 			}
 		}
-		return userDTO;
+		return user;
 	}
 
 }

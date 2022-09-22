@@ -12,6 +12,6 @@ public class UserService {
 	}
 
 	public UserDTO findByName(String nome) {
-		return userRepository.findByName(nome);
+		return  new UserDTO(userRepository.findByName(nome));
 	}
 }

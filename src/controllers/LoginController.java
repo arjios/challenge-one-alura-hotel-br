@@ -5,12 +5,11 @@ import service.UserService;
 
 public class LoginController {
 
-	private UserService userService = new UserService();
-	private UserDTO userDTO = new UserDTO();
+	static UserService userService = new UserService();
 	
-	public UserDTO isUser(String name, String senha) {
-		userDTO = userService.findByName(name);
+	public static UserDTO findUserByName(String name) {
+		UserDTO userDTO = userService.findByName(name);
 		return userDTO;
 	}
-	
+
 }

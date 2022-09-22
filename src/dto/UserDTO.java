@@ -1,5 +1,7 @@
 package dto;
 
+import entities.User;
+
 public class UserDTO {
 
 	private Long id;
@@ -7,6 +9,18 @@ public class UserDTO {
 	private String senha;
 	
 	public UserDTO() {
+	}
+
+	public UserDTO(Long id, String nome, String senha) {
+		this.id = id;
+		this.nome = nome;
+		this.senha = senha;
+	}
+
+	public UserDTO(User entity) {
+		id = entity.getId();
+		nome = entity.getNome();
+		senha = entity.getSenha();
 	}
 
 	public Long getId() {

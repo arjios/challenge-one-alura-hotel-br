@@ -63,7 +63,7 @@ public class ReservaDAO implements ReservaRepository {
 
 	@Override
 	public ReservaDTO findByIdReserva(Long id) {
-		String sql = "SELECT id, data_entrada, data_saida, id_reserva FROM RESERVAS "
+		String sql = "SELECT id, data_entrada, data_saida, id_reserva FROM RESERVA "
 				+ "WHERE id_reserva = ?";
 		Connection con = null;
 		PreparedStatement ps = null;

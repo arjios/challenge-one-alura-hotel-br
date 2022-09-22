@@ -5,6 +5,7 @@ import java.util.Set;
 import dao.ReservaDAO;
 import dto.ReservaDTO;
 import repositories.ReservaRepository;
+import service.util.CalculoDiarias;
 
 public class ReservaService {
 	
@@ -15,6 +16,9 @@ public class ReservaService {
 	
 	public Set<ReservaDTO> findAll() {	
 		Set<ReservaDTO> reservas = reservaRepository.findAll();
+		for (ReservaDTO reservaDTO : reservas) {
+			reservaDTO.setValor(CalculoDiarias.valorDiarias(500.00, reservaDTO.getDataEntrada(), reservaDTO.getDataSaida()));
+		}
 		return reservas;
 	}
 	

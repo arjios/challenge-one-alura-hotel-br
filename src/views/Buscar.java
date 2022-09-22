@@ -225,17 +225,19 @@ public class Buscar extends JFrame {
 		btnbuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println(e.getSource());
+				System.out.println(txtBuscar.getText());
 				
 				ReservaController reservaController = new ReservaController();
 				Set<ReservaDTO> reservas = reservaController.findAllReservas();
-				
-				HospedeController hospedeController = new HospedeController();
-				Set<HospedeDTO> hospedes = hospedeController.findAllHospedes();
-				
 				Iterator<ReservaDTO> itr = reservas.iterator();
+				
+
 				ReservaDTO rdto = new ReservaDTO();
+				HospedeDTO hdto = new HospedeDTO();
+				
 				tbReservas.setModel(modelo);
+				tbHospedes.setModel(modeloHospedes);
+				
 				while(itr.hasNext()) {
 					rdto = itr.next();
 					modelo.addRow(new Object[] {rdto.getIdReserva(),
@@ -243,6 +245,20 @@ public class Buscar extends JFrame {
 												rdto.getDataSaida(),
 												rdto.getValor(),
 												rdto.getFormaPagamento()});
+				}
+				
+				HospedeController hospedeController = new HospedeController();
+				Set<HospedeDTO> hospedes = hospedeController.findAllHospedes();
+				Iterator<HospedeDTO> ith = hospedes.iterator();
+				
+				while(ith.hasNext()) {
+					hdto = ith.next();
+					modeloHospedes.addRow(new Object[] {hdto.getNome(),
+											hdto.getSobrenome(),
+											hdto.getTelefone(),
+											hdto.getNacionalidade(),
+											hdto.getDataNascimento(),
+											hdto.getIdReserva()});
 				}
 
 			}
