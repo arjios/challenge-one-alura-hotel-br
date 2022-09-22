@@ -28,6 +28,7 @@ public class ReservaDTO {
 		dataEntrada = entity.getDataEntrada();
 		dataSaida = entity.getDataSaida();
 		idReserva = entity.getIdReserva();
+		formaPagamento = entity.getFormaPagamento();
 	}
 
 	public Long getId() {

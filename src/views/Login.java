@@ -113,6 +113,7 @@ public class Login extends JFrame {
 		txtUsuario.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
+
 				 if (txtUsuario.getText().equals("Digite seu nome de usuario")) {
 					 txtUsuario.setText("");
 					 txtUsuario.setForeground(Color.black);

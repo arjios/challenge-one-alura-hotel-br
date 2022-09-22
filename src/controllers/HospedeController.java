@@ -14,4 +14,8 @@ public class HospedeController {
 		return obj;
 	}
 	
+	public void inserirHospede(HospedeDTO dto) {
+		hospedeService.insert(dto);
+	}
+	
 }

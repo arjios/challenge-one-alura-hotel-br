@@ -12,12 +12,10 @@ public class Reserva implements Serializable {
 	private String formaPagamento;
 	private Integer idReserva;
 
-	
 	public Reserva() {
 	}
 
 	public Reserva(Long id, Instant dataEntrada, Instant dataSaida, Integer idReserva, String formaPagamento) {
-		super();
 		this.id = id;
 		this.dataEntrada = dataEntrada;
 		this.dataSaida = dataSaida;

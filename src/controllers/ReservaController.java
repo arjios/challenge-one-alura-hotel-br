@@ -7,12 +7,11 @@ import service.ReservaService;
 
 public class ReservaController {
 
-	
 	private ReservaService reservaService = new ReservaService();
 	private ReservaDTO reservaDTO = new ReservaDTO();
 	
 	public ReservaDTO inserirReserva(ReservaDTO dto) {
-		System.out.println("reservaController" + " -02- " + reservaDTO.getIdReserva());
+		System.out.println("reservaController" + " -02- " + dto.getIdReserva());
 		reservaDTO = reservaService.insert(dto);
 		return reservaDTO;
 	}
@@ -22,4 +21,7 @@ public class ReservaController {
 		return obj;
 	}
 	
+	public ReservaDTO findReservaByName(Long idReserva) {	
+		return reservaService.findByIdReserva(idReserva);
+	}
 }

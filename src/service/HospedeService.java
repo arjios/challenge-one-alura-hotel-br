@@ -22,4 +22,8 @@ public class HospedeService {
 		return hospedesDTO;
 	}
 
+	public void insert(HospedeDTO dto) {
+		hospedeRepository.insert(dto);
+	}
+
 }

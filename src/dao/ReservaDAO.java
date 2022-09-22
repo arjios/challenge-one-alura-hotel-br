@@ -21,7 +21,7 @@ import repositories.ReservaRepository;
 
 public class ReservaDAO implements ReservaRepository {
 	
-	private ReservaDTO reservaDTO;
+	private Reserva reserva = new Reserva();
 	
 	private CalculoDiarias calculaDiarias = new CalculoDiarias();;
 	
@@ -62,8 +62,8 @@ public class ReservaDAO implements ReservaRepository {
 	}
 
 	@Override
-	public ReservaDTO findByIdReserva(Long id) {
-		String sql = "SELECT id, data_entrada, data_saida, id_reserva FROM RESERVA "
+	public Reserva findByIdReserva(Long id) {
+		String sql = "SELECT id, data_entrada, data_saida, id_reserva, forma_pagamento FROM RESERVA "
 				+ "WHERE id_reserva = ?";
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -71,8 +71,24 @@ public class ReservaDAO implements ReservaRepository {
 		try {
 			con = ConnectionFactory.createConnection();
 			ps = con.prepareStatement(sql);
-			ps.setLong(4, id);
-			ps.executeQuery(sql);
+			ps.setLong(1, id);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				reserva.setId(rs.getLong("id"));
+				
+				LocalDate entrada = rs.getDate("data_entrada").toLocalDate();
+				Instant instantEntrada = entrada.atStartOfDay().toInstant(ZoneOffset.UTC);
+				reserva.setDataEntrada(instantEntrada);
+				
+				LocalDate saida = rs.getDate("data_saida").toLocalDate();
+				Instant instantSaida = saida.atStartOfDay().toInstant(ZoneOffset.UTC);
+				reserva.setDataSaida(instantSaida);
+				
+				reserva.setIdReserva(rs.getInt("id_reserva"));
+				
+				reserva.setFormaPagamento(rs.getString("forma_pagamento"));		
+	
+			}
 		} catch (ClassNotFoundException | SQLException e) {
 			System.out.println("Ocorreu erro na leitura da Reserva.");
 			e.printStackTrace();
@@ -91,7 +107,7 @@ public class ReservaDAO implements ReservaRepository {
 				e.printStackTrace();
 			}
 		}
-		return reservaDTO;
+		return reserva;
 	}
 
 	@Override
@@ -100,7 +116,6 @@ public class ReservaDAO implements ReservaRepository {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
-			System.out.println("ReservaDAO: insert()");
 			con = ConnectionFactory.createConnection();
 			ps = con.prepareStatement(sql);
 			
@@ -114,9 +129,9 @@ public class ReservaDAO implements ReservaRepository {
 			ps.setDate(1, e);
 			ps.setDate(2, s);
 			ps.setLong(3, entity.getIdReserva());
-			ps.setNString(4, entity.getFormaPagamento());
+			ps.setString(4, entity.getFormaPagamento());
+			
 			ps.execute();
-			System.out.println("reservaDAO" + " -04- " + entity.getIdReserva());
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -132,7 +147,7 @@ public class ReservaDAO implements ReservaRepository {
 				e.printStackTrace();
 			}
 		}
-		return null;
+		return entity;
 	}
 
 	@Override

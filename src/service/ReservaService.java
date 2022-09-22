@@ -4,6 +4,7 @@ import java.util.Set;
 
 import dao.ReservaDAO;
 import dto.ReservaDTO;
+import entities.Reserva;
 import repositories.ReservaRepository;
 import service.util.CalculoDiarias;
 
@@ -23,12 +24,13 @@ public class ReservaService {
 	}
 	
 	public ReservaDTO findByIdReserva(Long id) {
-		return reservaRepository.findByIdReserva(id);
+		ReservaDTO reservaDTO = new  ReservaDTO(reservaRepository.findByIdReserva(id));
+		reservaDTO.setValor(CalculoDiarias.valorDiarias(500.00, reservaDTO.getDataEntrada(), reservaDTO.getDataSaida()));
+		return reservaDTO;
 	}
 	
 	public ReservaDTO insert(ReservaDTO dto) {
-//		hospedeRepository.insert();
-		System.out.println("reservaService" + " -03- " + dto.getIdReserva());
+		dto.setValor(CalculoDiarias.valorDiarias(500.00, dto.getDataEntrada(), dto.getDataSaida()));
 		return reservaRepository.insert(dto);
 	}
 
