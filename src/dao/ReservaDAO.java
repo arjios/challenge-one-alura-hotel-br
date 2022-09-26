@@ -13,6 +13,8 @@ import java.time.ZoneOffset;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
+
 import dao.util.CalculoDiarias;
 import dto.ReservaDTO;
 import entities.Reserva;
@@ -56,6 +58,7 @@ public class ReservaDAO implements ReservaRepository {
 			con.close();
 		} catch (ClassNotFoundException | SQLException e) {
 			System.out.println("Ocorreu erro na leitura das Reservas.");
+			JOptionPane.showMessageDialog(null, "Ocorreu erro na leitura das Reservas.");
 			e.printStackTrace();
 		} 
 		return reservas;
@@ -183,24 +186,26 @@ public class ReservaDAO implements ReservaRepository {
 	}
 
 	@Override
-	public Reserva delete(Long id_reserva) {
-		String sql = "DELETE FROM reserva WHERE id = ?";
+	public Boolean delete(Long id_reserva) {
+		boolean boo = false;
+		String sql = "DELETE FROM reserva WHERE id_reserva = ?";
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
 			System.out.println("DELETE");
 			con = ConnectionFactory.createConnection();
 			ps = con.prepareStatement(sql);
-
-			ps.setLong(3, id_reserva);
-
+			ps.setLong(1, id_reserva);
 			ps.execute();
+			boo = true;
 
 		} catch (Exception e) {
 			System.out.println("Ocorreu erro na leitura da Reserva.");
+			boo = false;
 			e.printStackTrace();
 		}
-		return null;
+		System.out.println("ReservaDAO " + boo);
+		return boo;
 	}
 
 }

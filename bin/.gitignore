@@ -1,7 +1,5 @@
-/dao/
-/service/
-/repositories/
-/dto/
 /views/
 /controllers/
-/entities/
+/service/
+/dao/
+/repositories/

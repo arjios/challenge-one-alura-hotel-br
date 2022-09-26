@@ -33,5 +33,16 @@ public class ReservaService {
 		dto.setValor(CalculoDiarias.valorDiarias(500.00, dto.getDataEntrada(), dto.getDataSaida()));
 		return reservaRepository.insert(dto);
 	}
+	
+	public boolean delete(Object obj) {
+		boolean boo = false;
+		String id_txt = obj.toString();
+		Long id = (long) Integer.parseUnsignedInt(id_txt);
+		if(reservaRepository.delete(id)) {
+			boo = true;
+		}
+		System.out.println(boo);
+		return boo;
+	}
 
 }

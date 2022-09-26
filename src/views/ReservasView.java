@@ -11,6 +11,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.Format;
+import java.time.Instant;
 import java.util.Random;
 
 import javax.swing.DefaultComboBoxModel;
@@ -153,7 +154,7 @@ public class ReservasView extends JFrame {
 		txtDataS.setFont(new Font("Roboto", Font.PLAIN, 18));
 		txtDataS.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
-				//Ativa o evento, após o usuário selecionar as datas, o valor da reserva deve ser calculado
+//				CalculoDiarias.valorDiarias(500.00, Instant dataEntrada, Instant dataSaida);
 
 			}
 		});

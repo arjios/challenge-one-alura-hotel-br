@@ -225,7 +225,8 @@ public class Buscar extends JFrame {
 		btnbuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				((DefaultTableModel) tbHospedes.getModel()).setRowCount(0);
+				((DefaultTableModel) tbReservas.getModel()).setRowCount(0);
 				ReservaController reservaController = new ReservaController();
 				
 				HospedeController hospedeController = new HospedeController();
@@ -258,6 +259,7 @@ public class Buscar extends JFrame {
 				
 			}
 		});
+
 		btnbuscar.setLayout(null);
 		btnbuscar.setBackground(new Color(12, 138, 199));
 		btnbuscar.setBounds(748, 125, 122, 35);
@@ -285,6 +287,16 @@ public class Buscar extends JFrame {
 		lblEditar.setBounds(0, 0, 122, 35);
 		btnEditar.add(lblEditar);
 		
+		btnEditar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				tbReservas.getSelectedRow();
+				tbReservas.getSelectedColumn();
+				modelo.getValueAt(tbReservas.getSelectedRow(), tbReservas.getSelectedColumn());
+				System.out.println("EDITAR" + " " +  modelo.getValueAt(tbReservas.getSelectedRow(), tbReservas.getSelectedColumn()));
+			}	
+		});
+		
 		JPanel btnDeletar = new JPanel();
 		btnDeletar.setLayout(null);
 		btnDeletar.setBackground(new Color(12, 138, 199));
@@ -299,6 +311,22 @@ public class Buscar extends JFrame {
 		lblExcluir.setBounds(0, 0, 122, 35);
 		btnDeletar.add(lblExcluir);
 		setResizable(false);
+		
+		btnDeletar.addMouseListener(new MouseAdapter() {
+			ReservaController reservaController = new ReservaController();
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				tbReservas.getSelectedRow();
+				modelo.getValueAt(tbReservas.getSelectedRow(), tbReservas.getSelectedColumn());
+				Object obj = tbReservas.getValueAt(tbReservas.getSelectedRow(), 0);
+				if(reservaController.deletarReserva(obj)) {
+					System.out.println("Registro deletado com sucesso " + obj);
+				} else {
+					System.out.println("Error ao deletar o registro: " + obj);
+				}
+			}	
+		});
 	}
 	
 	//Código que permite movimentar a janela pela tela seguindo a posição de "x" e "y"	
