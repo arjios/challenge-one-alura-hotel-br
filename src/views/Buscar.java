@@ -13,6 +13,7 @@ import java.util.Set;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
@@ -246,10 +247,8 @@ public class Buscar extends JFrame {
 											hdto.getTelefone(),
 											hdto.getIdReserva()});
 					rdto  = reservaController.findReservaByName(Long.valueOf(hdto.getIdReserva()));
-					System.out.println(rdto.getIdReserva() + " : " + hdto.getIdReserva());
 					if(rdto.getIdReserva() != null) {
 						if(rdto.getIdReserva().equals(hdto.getIdReserva())) {
-							System.out.println("======================================================");
 							modelo.addRow(new Object[] {rdto.getIdReserva(),
 									rdto.getDataEntrada(),
 									rdto.getDataSaida(),
@@ -315,20 +314,28 @@ public class Buscar extends JFrame {
 		
 		btnDeletar.addMouseListener(new MouseAdapter() {
 			ReservaController reservaController = new ReservaController();
+			HospedeController hospedeController = new HospedeController();
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
-				tbReservas.getSelectedRow();
-				modelo.getValueAt(tbReservas.getSelectedRow(), tbReservas.getSelectedColumn());
-				int idx = tbReservas.getSelectedRow();
-				Object obj = tbReservas.getValueAt(tbReservas.getSelectedRow(), 0);
-				System.out.println(tbReservas.getSelectedRow());
-				if(reservaController.deletarReserva(obj) != null) {
-					((DefaultTableModel) tbReservas.getModel()).removeRow(idx);
-					System.out.println(idx);
-					System.out.println("Registro deletado com sucesso " + obj);
+				Object obj;
+				int idx, idxr, idxh, id_reserva = 0;
+				idxr = tbReservas.getSelectedRow();
+				idxh = tbHospedes.getSelectedRow();
+				if(idxr == -1) {
+					idx = idxh;
+					obj = tbHospedes.getValueAt(idxh, 6);
 				} else {
-					System.out.println("Error ao deletar o registro: " + obj);
+					idx = idxr;
+					obj = tbReservas.getValueAt(idxr, 0);
+				}
+				id_reserva = Integer.parseInt(obj.toString());
+				if(reservaController.deletarReserva(obj) != null) {
+					hospedeController.deletarHospede(obj);
+					((DefaultTableModel) tbReservas.getModel()).removeRow(idx);
+					((DefaultTableModel) tbHospedes.getModel()).removeRow(idx);
+					JOptionPane.showInternalMessageDialog(null, "Registro deletado com sucesso ", "Deletar", 1);
+				} else {
+					JOptionPane.showInternalMessageDialog(null, "Erro ao deletar o registro ", "Deletar", 0);
 				}
 			}	
 		});

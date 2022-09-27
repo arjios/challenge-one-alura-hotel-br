@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -297,6 +298,7 @@ public class RegistroHospede extends JFrame {
 				dto.setIdReserva(getIdReserva());
 				dto.setNacionalidade(txtNacionalidade.getSelectedItem().toString());
 				hospedeController.inserirHospede(dto);
+				JOptionPane.showInternalMessageDialog(null, "Registro inserido com sucesso ", "Inserir", 1);
 				ReservasView reservas = new ReservasView();
 				reservas.setVisible(true);
 				dispose();

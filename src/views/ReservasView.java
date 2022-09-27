@@ -316,14 +316,13 @@ public class ReservasView extends JFrame {
 							reservaDTO.setDataEntrada(txtDataE.getDate().toInstant());
 							reservaDTO.setDataSaida(txtDataS.getDate().toInstant());
 							reservaDTO.setIdReserva(new Random().nextInt(900000) + 100000);
-//							txtValor.setText(cd.calculaValorDiariasTotal(500.00, txtDataE.getDate().toInstant(), txtDataS.getDate().toInstant()).toString());
 							reservaDTO.setFormaPagamento(txtFormaPagamento.getSelectedItem().toString());
 							reservaDTO = reservaController.inserirReserva(reservaDTO);
 							RegistroHospede registro = new RegistroHospede();
 							registro.setIdReserva(reservaDTO.getIdReserva());
 							registro.setVisible(true);
 				} else {
-					JOptionPane.showMessageDialog(null, "Deve preencher todos os campos.");
+					JOptionPane.showInternalMessageDialog(null, "Deve preencher todos os campos.", "Inserir", 0);
 				}
 			}						
 		});
