@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class ConnectionFactory {
 
 	private static final String USERNAME = "root";
-	private static final String PASSWORD = "Arj!32873397";
+	private static final String PASSWORD = "12345678";
 	private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/hotelalura?useTimezone=true&serverTimezone=UTC";
 	
 	public static Connection createConnection() throws SQLException, ClassNotFoundException {
