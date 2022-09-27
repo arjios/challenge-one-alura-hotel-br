@@ -34,15 +34,12 @@ public class ReservaService {
 		return reservaRepository.insert(dto);
 	}
 	
-	public boolean delete(Object obj) {
-		boolean boo = false;
+	public Long delete(Object obj) {
 		String id_txt = obj.toString();
 		Long id = (long) Integer.parseUnsignedInt(id_txt);
-		if(reservaRepository.delete(id)) {
-			boo = true;
-		}
-		System.out.println(boo);
-		return boo;
+		id = reservaRepository.delete(id);
+		System.out.println(id);
+		return id;
 	}
 
 }

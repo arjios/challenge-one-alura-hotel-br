@@ -108,8 +108,6 @@ public class Buscar extends JFrame {
 				"Valor",
 				"Forma de Pago"});
 
-		
-		
 		tbHospedes = new JTable();
 		tbHospedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tbHospedes.setFont(new Font("Roboto", Font.PLAIN, 16));
@@ -225,15 +223,15 @@ public class Buscar extends JFrame {
 		btnbuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				((DefaultTableModel) tbHospedes.getModel()).setRowCount(0);
-				((DefaultTableModel) tbReservas.getModel()).setRowCount(0);
+				((DefaultTableModel) tbHospedes.getModel()).setRowCount(1);
+				((DefaultTableModel) tbReservas.getModel()).setRowCount(1);
 				ReservaController reservaController = new ReservaController();
-				
 				HospedeController hospedeController = new HospedeController();
 				Set<HospedeDTO> hospedes = hospedeController.findAllHospedes();
 				Iterator<HospedeDTO> ith = hospedes.iterator();
 				
 				HospedeDTO hdto = new HospedeDTO();
+				ReservaDTO rdto = new ReservaDTO();
 				
 				tbReservas.setModel(modelo);
 				tbHospedes.setModel(modeloHospedes);
@@ -247,13 +245,17 @@ public class Buscar extends JFrame {
 											hdto.getNacionalidade(),
 											hdto.getTelefone(),
 											hdto.getIdReserva()});
-					if(hdto.getIdReserva() != null) {
-						ReservaDTO rdto  = reservaController.findReservaByName(Long.valueOf(hdto.getIdReserva()));
-						modelo.addRow(new Object[] {rdto.getIdReserva(),
-								rdto.getDataEntrada(),
-								rdto.getDataSaida(),
-								rdto.getValor(),
-								rdto.getFormaPagamento()});;
+					rdto  = reservaController.findReservaByName(Long.valueOf(hdto.getIdReserva()));
+					System.out.println(rdto.getIdReserva() + " : " + hdto.getIdReserva());
+					if(rdto.getIdReserva() != null) {
+						if(rdto.getIdReserva().equals(hdto.getIdReserva())) {
+							System.out.println("======================================================");
+							modelo.addRow(new Object[] {rdto.getIdReserva(),
+									rdto.getDataEntrada(),
+									rdto.getDataSaida(),
+									rdto.getValor(),
+									rdto.getFormaPagamento()});
+						}
 					}
 				}
 				
@@ -290,10 +292,9 @@ public class Buscar extends JFrame {
 		btnEditar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				tbReservas.getSelectedRow();
-				tbReservas.getSelectedColumn();
-				modelo.getValueAt(tbReservas.getSelectedRow(), tbReservas.getSelectedColumn());
-				System.out.println("EDITAR" + " " +  modelo.getValueAt(tbReservas.getSelectedRow(), tbReservas.getSelectedColumn()));
+				int linha = tbReservas.getSelectedRow();
+				int coluna = tbReservas.getSelectedColumn();
+				System.out.println("EDITAR" + ": " +  tbReservas.getValueAt(linha, coluna));
 			}	
 		});
 		
@@ -319,8 +320,12 @@ public class Buscar extends JFrame {
 
 				tbReservas.getSelectedRow();
 				modelo.getValueAt(tbReservas.getSelectedRow(), tbReservas.getSelectedColumn());
+				int idx = tbReservas.getSelectedRow();
 				Object obj = tbReservas.getValueAt(tbReservas.getSelectedRow(), 0);
-				if(reservaController.deletarReserva(obj)) {
+				System.out.println(tbReservas.getSelectedRow());
+				if(reservaController.deletarReserva(obj) != null) {
+					((DefaultTableModel) tbReservas.getModel()).removeRow(idx);
+					System.out.println(idx);
 					System.out.println("Registro deletado com sucesso " + obj);
 				} else {
 					System.out.println("Error ao deletar o registro: " + obj);

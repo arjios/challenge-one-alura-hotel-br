@@ -11,5 +11,5 @@ public interface ReservaRepository {
 	Reserva findByIdReserva(Long id);
 	ReservaDTO insert(ReservaDTO dto);
 	Reserva update(Long id, ReservaDTO dto);
-	Boolean delete(Long id);
+	Long delete(Long id);
 }

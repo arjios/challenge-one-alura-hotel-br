@@ -25,5 +25,22 @@ public class HospedeService {
 	public void insert(HospedeDTO dto) {
 		hospedeRepository.insert(dto);
 	}
+	
+	public HospedeDTO update(Long id_reserva, HospedeDTO hospedeDTO) {
+
+		return null;
+	}
+
+	public Long delete(Object obj) {
+		String id_txt = obj.toString();
+		Long id = (long) Integer.parseUnsignedInt(id_txt);
+		ReservaService reservaService = new ReservaService();
+		if(reservaService.delete(id) != null) {
+			id = hospedeRepository.delete(id);
+		} else {
+			id = null;
+		}
+		return id;
+	}
 
 }

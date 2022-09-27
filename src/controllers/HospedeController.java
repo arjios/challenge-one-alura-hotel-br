@@ -17,5 +17,10 @@ public class HospedeController {
 	public void inserirHospede(HospedeDTO dto) {
 		hospedeService.insert(dto);
 	}
+
+	public Long deletarHospede(Object obj) {
+		Long id = hospedeService.delete(obj);
+		return id;
+	}
 	
 }

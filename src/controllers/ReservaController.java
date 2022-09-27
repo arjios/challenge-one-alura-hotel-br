@@ -22,19 +22,13 @@ public class ReservaController {
 	}
 	
 	public ReservaDTO inserirReserva(ReservaDTO dto) {
-		System.out.println("reservaController" + " -02- " + dto.getIdReserva());
 		reservaDTO = reservaService.insert(dto);
 		return reservaDTO;
 	}
 	
-	
-	public boolean deletarReserva(Object obj) {
-		boolean boo = false;
-		if(reservaService.delete(obj)) {
-			boo = true;
-		}
-		System.out.println(boo);
-		return boo;
+	public Long deletarReserva(Object obj) {
+		Long id = reservaService.delete(obj);
+		return id;
 	}
 	
 }

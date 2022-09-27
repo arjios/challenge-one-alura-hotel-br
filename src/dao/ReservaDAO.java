@@ -171,14 +171,15 @@ public class ReservaDAO implements ReservaRepository {
 			LocalDate saida = LocalDate.ofInstant(dto.getDataSaida(), ZoneId.systemDefault());
 			Date s = Date.valueOf(saida);
 
-
 			ps.setDate(1, e);
 			ps.setDate(2, s);
 
 			ps.setNString(4, dto.getFormaPagamento());
 			ps.execute();
+			
 			System.out.println("reservaDAO" + " -04- " + dto.getIdReserva());
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Ocorreu erro na leitura da Reserva.", "Error: Reserva Update.", 1);
 			System.out.println("Ocorreu erro na leitura da Reserva.");
 			e.printStackTrace();
 		}	
@@ -186,8 +187,7 @@ public class ReservaDAO implements ReservaRepository {
 	}
 
 	@Override
-	public Boolean delete(Long id_reserva) {
-		boolean boo = false;
+	public Long delete(Long id_reserva) {
 		String sql = "DELETE FROM reserva WHERE id_reserva = ?";
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -197,15 +197,13 @@ public class ReservaDAO implements ReservaRepository {
 			ps = con.prepareStatement(sql);
 			ps.setLong(1, id_reserva);
 			ps.execute();
-			boo = true;
-
 		} catch (Exception e) {
 			System.out.println("Ocorreu erro na leitura da Reserva.");
-			boo = false;
+			id_reserva = null;
 			e.printStackTrace();
 		}
-		System.out.println("ReservaDAO " + boo);
-		return boo;
+		System.out.println("ReservaDAO " + id_reserva);
+		return id_reserva;
 	}
 
 }

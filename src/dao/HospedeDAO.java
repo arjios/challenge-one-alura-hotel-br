@@ -102,11 +102,23 @@ public class HospedeDAO implements HospedeRepository {
 	}
 
 	@Override
-	public HospedeDTO delete(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Long delete(Long id) {
+		String sql = "DELETE FROM hospede WHERE id_reserva = ?";
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = ConnectionFactory.createConnection();
+			ps = con.prepareStatement(sql);
+			ps.setLong(1, id);
+			ps.execute();
+		} catch (Exception e) {
+			System.out.println("Ocorreu erro na leitura da Reserva.");
+			id = null;
+			e.printStackTrace();
+		}
+		System.out.println("HospedeDAO " + id);
+		return id;
 	}
 
-	
-	
 }
+

@@ -11,6 +11,6 @@ public interface HospedeRepository {
 	HospedeDTO findByIdReserva(Long id);
 	void insert(HospedeDTO hospedeDTO);
 	HospedeDTO update(Long idReserva, HospedeDTO hospdeDTO);
-	HospedeDTO delete(Long id);
+	Long delete(Long id);
 	
 }
