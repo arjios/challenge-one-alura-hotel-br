@@ -15,7 +15,6 @@ import java.util.Set;
 
 import javax.swing.JOptionPane;
 
-import dao.util.CalculoDiarias;
 import dto.ReservaDTO;
 import entities.Reserva;
 import factory.ConnectionFactory;
@@ -25,33 +24,27 @@ public class ReservaDAO implements ReservaRepository {
 	
 	private Reserva reserva = new Reserva();
 	
-	private CalculoDiarias calculaDiarias = new CalculoDiarias();;
-	
-	private Set<ReservaDTO> reservas = new HashSet<>();
+	private Set<Reserva> reservas = new HashSet<>();
 
 	@Override
-	public Set<ReservaDTO> findAll() {
+	public Set<Reserva> findAll() {
 		try {
 			Connection con = ConnectionFactory.createConnection();
 			Statement st =  con.createStatement();
 			st.execute("SELECT * FROM RESERVA");
 			ResultSet rs = st.getResultSet();
 
-			while(rs.next()) {
-				ReservaDTO dto = new ReservaDTO();
-				dto.setId(rs.getLong(1));
-				dto.setIdReserva(rs.getInt(4));
-				
+			while(rs.next()) {			
+				reserva.setId(rs.getLong(1));	
 				LocalDate entrada = rs.getDate(2).toLocalDate();
 				Instant instantEntrada = entrada.atStartOfDay().toInstant(ZoneOffset.UTC);
-				dto.setDataEntrada(instantEntrada);
+				reserva.setDataEntrada(instantEntrada);			
 				LocalDate saida = rs.getDate(3).toLocalDate();
 				Instant instantSaida = saida.atStartOfDay().toInstant(ZoneOffset.UTC);
-				dto.setDataSaida(instantSaida);
-				
-				dto.setFormaPagamento(rs.getString(5));		
-				dto.setValor(calculaDiarias.calculaValorDiariasTotal(500.00, instantEntrada, instantSaida));
-				reservas.add(dto);
+				reserva.setDataSaida(instantSaida);				
+				reserva.setIdReserva(rs.getInt(4));				
+				reserva.setFormaPagamento(rs.getString(5));		
+				reservas.add(reserva);
 			}
 			rs.close();
 			st.close();
@@ -154,7 +147,7 @@ public class ReservaDAO implements ReservaRepository {
 	}
 
 	@Override
-	public Reserva update(Long id, ReservaDTO dto) {
+	public ReservaDTO update(Long id, ReservaDTO reserva) {
 		String sql = "UPDATE reserva" + 
 				"SET data_entrada = ?, data_saida = ?, forma_pagamento = ?" + 
 				"WHERE id_reserva = ?";
@@ -165,22 +158,20 @@ public class ReservaDAO implements ReservaRepository {
 			con = ConnectionFactory.createConnection();
 			ps = con.prepareStatement(sql);
 			
-			LocalDate entrada = LocalDate.ofInstant(dto.getDataEntrada(), ZoneId.systemDefault());
+			LocalDate entrada = LocalDate.ofInstant(reserva.getDataEntrada(), ZoneId.systemDefault());
 			Date e = Date.valueOf(entrada);
 			
-			LocalDate saida = LocalDate.ofInstant(dto.getDataSaida(), ZoneId.systemDefault());
+			LocalDate saida = LocalDate.ofInstant(reserva.getDataSaida(), ZoneId.systemDefault());
 			Date s = Date.valueOf(saida);
 
 			ps.setDate(1, e);
 			ps.setDate(2, s);
 
-			ps.setNString(4, dto.getFormaPagamento());
+			ps.setNString(4, reserva.getFormaPagamento());
 			ps.execute();
-			
-			System.out.println("reservaDAO" + " -04- " + dto.getIdReserva());
+
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Ocorreu erro na leitura da Reserva.", "Error: Reserva Update.", 1);
-			System.out.println("Ocorreu erro na leitura da Reserva.");
 			e.printStackTrace();
 		}	
 		return null;

@@ -1,5 +1,6 @@
 package service;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import dao.ReservaDAO;
@@ -12,15 +13,18 @@ public class ReservaService {
 	
 	ReservaRepository reservaRepository = new ReservaDAO();
 	
+	Set<ReservaDTO> reservasDTO = new HashSet<>();
+	
 //	HospedeRepository hospedeRepository;
 	
 	
 	public Set<ReservaDTO> findAll() {	
-		Set<ReservaDTO> reservas = reservaRepository.findAll();
-		for (ReservaDTO reservaDTO : reservas) {
-			reservaDTO.setValor(CalculoDiarias.valorDiarias(500.00, reservaDTO.getDataEntrada(), reservaDTO.getDataSaida()));
+		for (Reserva reserva : reservaRepository.findAll()) {
+			ReservaDTO dto = new ReservaDTO(reserva);
+			dto.setValor(CalculoDiarias.valorDiarias(500.00, reserva.getDataEntrada(), reserva.getDataSaida()));
+			reservasDTO.add(dto);
 		}
-		return reservas;
+		return reservasDTO;
 	}
 	
 	public ReservaDTO findByIdReserva(Long id) {

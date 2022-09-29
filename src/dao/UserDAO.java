@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import javax.swing.JOptionPane;
+
 import entities.User;
 import factory.ConnectionFactory;
 import repositories.UserRepository;
@@ -30,7 +32,7 @@ public class UserDAO implements UserRepository {
 			}
 
 		} catch (Exception e) {
-			System.out.println("Ocorreu erro na leitura do nome em User.");
+			JOptionPane.showMessageDialog(null, "Ocorreu erro na busca pelo nome do usuario.", "UserDAO", 0);
 			e.printStackTrace();
 		} finally {
 			try {

@@ -1,6 +1,3 @@
-/views/
-/controllers/
-/service/
 /dao/
+/service/
 /repositories/
-/factory/

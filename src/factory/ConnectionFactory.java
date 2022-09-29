@@ -1,8 +1,9 @@
 package factory;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class ConnectionFactory {
 
@@ -11,10 +12,10 @@ public class ConnectionFactory {
 	private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/hotelalura?useTimezone=true&serverTimezone=UTC";
 	
 	public static Connection createConnection() throws SQLException, ClassNotFoundException {
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		
-		Connection connection = DriverManager.getConnection(DATABASE_URL, USERNAME, PASSWORD);
-		
-		return connection;
+		ComboPooledDataSource cpds = new ComboPooledDataSource();
+		cpds.setJdbcUrl(DATABASE_URL);
+		cpds.setUser(USERNAME);
+		cpds.setPassword(PASSWORD);	
+		return cpds.getConnection();
 	}
 }
