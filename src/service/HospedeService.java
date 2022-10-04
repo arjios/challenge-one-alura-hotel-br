@@ -27,15 +27,7 @@ public class HospedeService {
 	}
 	
 	public HospedeDTO update(Long id, HospedeDTO hdto) {
-		HospedeDTO hospedeDTO = new HospedeDTO();
-		hospedeDTO = hospedeRepository.findByIdReserva(id);
-		hospedeDTO.setId(hdto.getId());
-		hospedeDTO.setNome(hdto.getNome());
-		hospedeDTO.setSobrenome(hdto.getSobrenome());
-		hospedeDTO.setTelefone(hdto.getTelefone());
-		hospedeDTO.setDataNascimento(hdto.getDataNascimento());
-		hospedeDTO.setNacionalidade(hdto.getNacionalidade());		
-		return hospedeRepository.update(hospedeDTO.getId(), hospedeDTO);
+		return hospedeRepository.update(id, hdto);
 	}
 
 	public Long delete(Object obj) {

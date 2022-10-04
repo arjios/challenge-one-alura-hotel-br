@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -12,14 +13,16 @@ import java.time.ZoneOffset;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
+
 import dto.HospedeDTO;
+import dto.ReservaDTO;
 import entities.Hospede;
 import factory.ConnectionFactory;
 import repositories.HospedeRepository;
 
 public class HospedeDAO implements HospedeRepository {
-	
-	private Hospede hospede;
+
 	private Set<Hospede> hospedes = new HashSet<>();
 
 	@Override
@@ -51,7 +54,7 @@ public class HospedeDAO implements HospedeRepository {
 	}
 
 	@Override
-	public HospedeDTO findByIdReserva(Long id) {
+	public HospedeDTO findByIdHospede(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -96,9 +99,29 @@ public class HospedeDAO implements HospedeRepository {
 	}
 
 	@Override
-	public HospedeDTO update(Long idReserva, HospedeDTO hospdeDTO) {
-		// TODO Auto-generated method stub
-		return null;
+	public HospedeDTO update(Long id_reserva, HospedeDTO hospede) {
+		String sql = "UPDATE hospede " + 
+				"SET nome = ?, sobrenome = ?, telefone = ?, data_nascimento = ?, nacionalidade  = ? " + 
+				"WHERE id_reserva = ? ";
+		Connection con = null;
+		PreparedStatement ps = null;
+		try {
+			con = ConnectionFactory.createConnection();
+			ps = con.prepareStatement(sql);
+	
+			ps.setString(1, hospede.getNome());
+			ps.setString(2, hospede.getSobrenome());
+			ps.setString(3, hospede.getTelefone());
+			ps.setTimestamp(4, Timestamp.from( hospede.getDataNascimento()));
+			ps.setString(5,  hospede.getNacionalidade());
+			ps.setLong(6, id_reserva);
+			ps.execute();
+
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Ocorreu erro na leitura de Hospede.", "Error: Hospede Update.", 0);
+			e.printStackTrace();
+		}	
+		return hospede;
 	}
 
 	@Override

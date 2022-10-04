@@ -304,13 +304,11 @@ public class Buscar extends JFrame {
 				int linhah = tbHospedes.getSelectedRow();
 				int colunah = tbHospedes.getSelectedColumn();
 				if(linhar > 0 && colunar > 0) {
-					System.out.println("EDITAR Reserva" + ": " +  modelo.getValueAt(linhar, colunar));
 					reservaController.atualizarReserva(modelo);
 					tbReservas.clearSelection();
 					linhar = -1;
 				}
 				if(linhah > 0 && colunah > 0) {
-					System.out.println("EDITAR Hospede" + ": " +  modeloHospedes.getValueAt(linhah, colunah));
 					hospedeController.atualizarHospedes(modeloHospedes);
 					tbHospedes.clearSelection();
 					linhah = -1;

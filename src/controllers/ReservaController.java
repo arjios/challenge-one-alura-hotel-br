@@ -46,7 +46,6 @@ public class ReservaController {
 			
 			rdto.setFormaPagamento(dtm.getValueAt(i, 4).toString());
 
-			System.out.println("ReservaController - 03 " + i + " -");
 			reservaService.update(rdto.getId(), rdto);
 		}
 		return reservaDTO;

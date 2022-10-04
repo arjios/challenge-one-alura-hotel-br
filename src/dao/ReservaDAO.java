@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.temporal.TemporalAmount;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,13 +36,17 @@ public class ReservaDAO implements ReservaRepository {
 			ResultSet rs = st.getResultSet();
 
 			while(rs.next()) {			
-				reserva.setId(rs.getLong(1));	
-				LocalDate entrada = rs.getDate(2).toLocalDate();
-				Instant instantEntrada = entrada.atStartOfDay().toInstant(ZoneOffset.UTC);
-				reserva.setDataEntrada(instantEntrada);			
-				LocalDate saida = rs.getDate(3).toLocalDate();
-				Instant instantSaida = saida.atStartOfDay().toInstant(ZoneOffset.UTC);
-				reserva.setDataSaida(instantSaida);				
+				reserva.setId(rs.getLong(1));
+				reserva.setDataEntrada(rs.getDate(2).toInstant());
+				reserva.setDataSaida(rs.getDate(3).toInstant());
+//				LocalDate entrada = rs.getDate(2).toLocalDate();
+//				Instant instantEntrada = Instant.parse(entrada.toString());
+//				Instant instantEntrada = entrada.atStartOfDay().toInstant(ZoneOffset.UTC);
+//				reserva.setDataEntrada(instantEntrada.plus());			
+//				LocalDate saida = rs.getDate(3).toLocalDate();
+//				Instant instantSaida = Instant.parse(saida.toString());
+//				Instant instantSaida = saida.atStartOfDay().toInstant(ZoneOffset.UTC);
+//				reserva.setDataSaida(instantSaida);				
 				reserva.setIdReserva(rs.getInt(4));				
 				reserva.setFormaPagamento(rs.getString(5));		
 				reservas.add(reserva);
@@ -160,13 +165,11 @@ public class ReservaDAO implements ReservaRepository {
 			
 			LocalDate entrada = LocalDate.ofInstant(reserva.getDataEntrada(), ZoneId.systemDefault());
 			Date e = Date.valueOf(entrada);
-			System.out.println(ZoneId.systemDefault());
 			
 			LocalDate saida = LocalDate.ofInstant(reserva.getDataSaida(), ZoneId.systemDefault());
+			
 			Date s = Date.valueOf(saida);
-			
-			System.out.println(s);
-			
+
 			ps.setDate(1, e);
 			ps.setDate(2, s);
 			ps.setString(3, reserva.getFormaPagamento());

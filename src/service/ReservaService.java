@@ -15,9 +15,6 @@ public class ReservaService {
 	
 	Set<ReservaDTO> reservasDTO = new HashSet<>();
 	
-//	HospedeRepository hospedeRepository;
-	
-	
 	public Set<ReservaDTO> findAll() {	
 		for (Reserva reserva : reservaRepository.findAll()) {
 			ReservaDTO dto = new ReservaDTO(reserva);
@@ -45,7 +42,6 @@ public class ReservaService {
 		reservaDTO.setFormaPagamento(dto.getFormaPagamento());
 		reservaDTO.setValor(CalculoDiarias.valorDiarias(500.00, reservaDTO.getDataEntrada(), reservaDTO.getDataSaida()));
 		reservaDTO = reservaRepository.update(id, reservaDTO);
-		reservaDTO.setValor(CalculoDiarias.valorDiarias(500.00, reservaDTO.getDataEntrada(), reservaDTO.getDataSaida()));
 		return reservaDTO;
 	}
 	

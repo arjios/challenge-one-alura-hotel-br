@@ -3,3 +3,6 @@
 /repositories/
 /views/
 /controllers/
+/dto/
+/entities/
+/factory/
