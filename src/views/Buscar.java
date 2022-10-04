@@ -287,13 +287,34 @@ public class Buscar extends JFrame {
 		lblEditar.setFont(new Font("Roboto", Font.PLAIN, 18));
 		lblEditar.setBounds(0, 0, 122, 35);
 		btnEditar.add(lblEditar);
+
+		
+		
+		
+		//UPDATE **********************************************************************************
+		// ****************************************************************************************
 		
 		btnEditar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int linha = tbReservas.getSelectedRow();
-				int coluna = tbReservas.getSelectedColumn();
-				System.out.println("EDITAR" + ": " +  tbReservas.getValueAt(linha, coluna));
+				ReservaController reservaController = new ReservaController();
+				HospedeController hospedeController = new HospedeController();
+				int linhar = tbReservas.getSelectedRow();
+				int colunar = tbReservas.getSelectedColumn();
+				int linhah = tbHospedes.getSelectedRow();
+				int colunah = tbHospedes.getSelectedColumn();
+				if(linhar > 0 && colunar > 0) {
+					System.out.println("EDITAR Reserva" + ": " +  modelo.getValueAt(linhar, colunar));
+					reservaController.atualizarReserva(modelo);
+					tbReservas.clearSelection();
+					linhar = -1;
+				}
+				if(linhah > 0 && colunah > 0) {
+					System.out.println("EDITAR Hospede" + ": " +  modeloHospedes.getValueAt(linhah, colunah));
+					hospedeController.atualizarHospedes(modeloHospedes);
+					tbHospedes.clearSelection();
+					linhah = -1;
+				}
 			}	
 		});
 		

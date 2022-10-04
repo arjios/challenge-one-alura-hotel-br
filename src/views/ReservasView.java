@@ -11,7 +11,6 @@ import java.awt.event.MouseMotionAdapter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.Format;
-import java.time.Instant;
 import java.util.Random;
 
 import javax.swing.DefaultComboBoxModel;
@@ -30,9 +29,7 @@ import javax.swing.border.LineBorder;
 import com.toedter.calendar.JDateChooser;
 
 import controllers.ReservaController;
-import dao.util.CalculoDiarias;
 import dto.ReservaDTO;
-
 
 @SuppressWarnings("serial")
 public class ReservasView extends JFrame {
@@ -48,7 +45,7 @@ public class ReservasView extends JFrame {
 	public static JComboBox<Format> txtFormaPagamento;
 	int xMouse, yMouse;
 	private JLabel labelExit;
-	private JLabel lblValorSimbolo; 
+	private JLabel lblValorSimbolo;
 	private JLabel labelAtras;
 
 	/**
@@ -85,8 +82,6 @@ public class ReservasView extends JFrame {
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setUndecorated(true);
-		
-
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(null);
@@ -162,9 +157,7 @@ public class ReservasView extends JFrame {
 		txtDataS.getCalendarButton().setBackground(SystemColor.textHighlight);
 		txtDataS.setBorder(new LineBorder(new Color(255, 255, 255), 0));
 		panel.add(txtDataS);
-		
-	
-		
+			
 		txtValor = new JTextField();
 		txtValor.setBackground(SystemColor.text);
 		txtValor.setHorizontalAlignment(SwingConstants.CENTER);
@@ -346,9 +339,9 @@ public class ReservasView extends JFrame {
 	        yMouse = evt.getY();
 	    }
 
-	    private void headerMouseDragged(java.awt.event.MouseEvent evt) {
+	 private void headerMouseDragged(java.awt.event.MouseEvent evt) {
 	        int x = evt.getXOnScreen();
 	        int y = evt.getYOnScreen();
 	        this.setLocation(x - xMouse, y - yMouse);
-}
+	 }
 }

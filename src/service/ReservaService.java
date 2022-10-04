@@ -38,6 +38,17 @@ public class ReservaService {
 		return reservaRepository.insert(dto);
 	}
 	
+	public ReservaDTO update(Long id, ReservaDTO dto) {
+		ReservaDTO reservaDTO = new  ReservaDTO(reservaRepository.findByIdReserva(id));
+		reservaDTO.setDataEntrada(dto.getDataEntrada());
+		reservaDTO.setDataSaida(dto.getDataSaida());
+		reservaDTO.setFormaPagamento(dto.getFormaPagamento());
+		reservaDTO.setValor(CalculoDiarias.valorDiarias(500.00, reservaDTO.getDataEntrada(), reservaDTO.getDataSaida()));
+		reservaDTO = reservaRepository.update(id, reservaDTO);
+		reservaDTO.setValor(CalculoDiarias.valorDiarias(500.00, reservaDTO.getDataEntrada(), reservaDTO.getDataSaida()));
+		return reservaDTO;
+	}
+	
 	public Long delete(Object obj) {
 		String id_txt = obj.toString();
 		Long id = (long) Integer.parseUnsignedInt(id_txt);
