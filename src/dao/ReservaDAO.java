@@ -159,7 +159,6 @@ public class ReservaDAO implements ReservaRepository {
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
-			System.out.println("UPDATE");
 			con = ConnectionFactory.createConnection();
 			ps = con.prepareStatement(sql);
 			
@@ -177,7 +176,6 @@ public class ReservaDAO implements ReservaRepository {
 			ps.execute();
 
 		} catch (Exception e) {
-			System.out.println(sql);
 			JOptionPane.showMessageDialog(null, "Ocorreu erro na leitura da Reserva.", "Error: Reserva Update.", 0);
 			e.printStackTrace();
 		}	
